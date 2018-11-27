@@ -21,10 +21,10 @@ class GlitchOverlay implements Overlay {
         
         // Occasional glitch
         if(millis() % 3000 < 50) {
-            makeGlitch(new Glitch(true, 0, 10, 20, height, 20));
+            makeGlitch(new Glitch(true, random(0, 10), 10, 20, height, 20));
         }
         if(millis() % 7000 < 50) {
-            makeGlitch(new Glitch(true, 0, 10, -20, height, 20)); 
+            makeGlitch(new Glitch(true, random(0, 10), 10, -20, height, 20)); 
         }
     }
     

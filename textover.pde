@@ -6,11 +6,13 @@ class TextOverlay implements Overlay {
     
     private float textSize = 40;
     private boolean allCaps = true;
+    private int textFadeOutDuration = 5;
     
     private String fileLocation;
     private String text;
     private String textLast;
     private PFont font;
+    private int skipTextUpdates = 0;
     
     private ArrayList<Message> messageQueue;
     
@@ -21,18 +23,28 @@ class TextOverlay implements Overlay {
         this.messageQueue = messageQueue;
         this.fileLocation = fileLocation;
         text = "";
-        font = createFont("fonts/Raleway-Regular.ttf", textSize);
+        font = createFont("fonts/Montserrat-Bold.ttf", textSize);
     }
     
     public void update() {
         if(fileLocation != null) {
             Path path = Paths.get(fileLocation);
             try {
-                text = new String(Files.readAllBytes(path));
+                String textFile = new String(Files.readAllBytes(path));
+                
+                skipTextUpdates--;
+                if(textFile.trim().length() < 1 && skipTextUpdates < 0) {
+                    skipTextUpdates = textFadeOutDuration;
+                }
+                    
+                if(skipTextUpdates < 1 || textFile.trim().length() > 0) {
+                    text = textFile;                    
+                }
+                
                 if(allCaps)
                     text = text.toUpperCase();
                  
-                 if(!text.equals(textLast)) {
+                 if(!text.equals(textLast) || skipTextUpdates == textFadeOutDuration) {
                      // Glitch out text
                      float textHeight = 2 * (textAscent() + textDescent());
                      

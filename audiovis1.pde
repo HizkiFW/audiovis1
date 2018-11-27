@@ -12,7 +12,7 @@ void setup() {
     overlayMessageQueue = new ArrayList<Message>();
     
     bg = new Background();
-    bg.overlays.add(new SoundGraphOverlay(overlayMessageQueue, this));
+    //bg.overlays.add(new SoundGraphOverlay(overlayMessageQueue, this));
     bg.overlays.add(new SnowOverlay(overlayMessageQueue));
     bg.overlays.add(new TextOverlay(overlayMessageQueue, "D:/EZWorship.txt"));
     bg.overlays.add(new GlitchOverlay(overlayMessageQueue));
