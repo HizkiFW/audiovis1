@@ -7,6 +7,7 @@ class GlitchOverlay implements Overlay {
     public GlitchOverlay(ArrayList<Message> messageQueue) {
         this.messageQueue = messageQueue;
         glitches = new ArrayList<Glitch>();
+        multiplier = 1;
     }
     
     public void makeGlitch(Glitch glitch) {

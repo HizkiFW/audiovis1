@@ -1,4 +1,5 @@
 Background bg;
+NetworkManager nm;
 ArrayList<Message> overlayMessageQueue;
 float bgColor = 0;
  
@@ -12,6 +13,7 @@ void setup() {
     
     overlayMessageQueue = new ArrayList<Message>();
     
+    nm = new NetworkManager(this, overlayMessageQueue);
     bg = new Background();
     //bg.overlays.add(new SoundGraphOverlay(overlayMessageQueue, this));
     //bg.overlays.add(new SnowOverlay(overlayMessageQueue));
@@ -26,6 +28,7 @@ void draw() {
     background(bgColor);
     fill(1 - bgColor);
     
+    nm.receive();
     bg.update();
     bg.draw();
     
