@@ -3,7 +3,8 @@ public static enum MessageType {
     GLITCHINESS,
     INVERT_COLORS,
     FONT_SIZE,
-    TEXT_POSITION
+    TEXT_POSITION,
+    TEXT_AUTOSIZE
 }
 
 class Message {

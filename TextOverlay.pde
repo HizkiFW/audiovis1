@@ -4,7 +4,10 @@ class TextOverlay implements Overlay {
     private float xpos = Config.textPosX;
     private float ypos = Config.textPosY;
     
+    private final float textSizeOriginal = Config.fontSize;
     private float textSize = Config.fontSize;
+    private float textSizeAuto = Config.fontSize;
+    private boolean textAutoSize = false;
     private boolean allCaps = true;
     private int textFadeOutDuration = 5;
     
@@ -26,6 +29,19 @@ class TextOverlay implements Overlay {
         font = createFont("fonts/Montserrat-Bold.ttf", textSize);
     }
     
+    private void autoSize() {
+        while(textWidth(text) < width) {
+            textSize++;
+            textSize(textSize);
+        }
+        while(textWidth(text) > width) {
+            textSize--;
+            textSize(textSize);
+        }
+        Config.fontSize = textSize;
+        textSizeAuto = textSize;
+    }
+    
     public void update() {
         
         if(messageQueue.size() > 0) {
@@ -35,8 +51,17 @@ class TextOverlay implements Overlay {
             } else if(messageQueue.get(0).type == MessageType.TEXT_POSITION) {
                 xpos = ((float[]) m.message)[0];
                 ypos = ((float[]) m.message)[1];
+            } else if(messageQueue.get(0).type == MessageType.TEXT_AUTOSIZE) {
+                textAutoSize = !textAutoSize;
+                if(!textAutoSize) {
+                    Config.fontSize = textSizeOriginal;
+                    textSize = textSizeOriginal;
+                } else autoSize();
             }
         }
+        
+        if(textAutoSize)
+            textSize = textSizeAuto;
         
         if(fileLocation != null) {
             Path path = Paths.get(fileLocation);
@@ -71,6 +96,10 @@ class TextOverlay implements Overlay {
                      Glitch g3 = new Glitch(true, 0, textHeight/8, 50, ypos, 20);
                      Message m3 = new Message(MessageType.GLITCH, g3);
                      messageQueue.add(m3);
+                     
+                     // Resize text
+                     if(textAutoSize)
+                         autoSize();
                      
                      textLast = text;
                  }

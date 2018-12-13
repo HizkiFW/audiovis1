@@ -27,19 +27,19 @@ class GlitchOverlay implements Overlay {
         }
         
         // Occasional glitch
-        if(millis() % 3000 < 50) {
+        if(millis() % 3000 < 30 * multiplier) {
             makeGlitch(new Glitch(true, random(0, 10), 10, 20, height, 20));
         }
-        if(millis() % 7000 < 50) {
+        if(millis() % 7000 < 30 * multiplier) {
             makeGlitch(new Glitch(true, random(0, 10), 10, -20, height, 20)); 
         }
         
         // FRICKIN WILD GLITCHAZZ!!
-        if(millis() % 250 < 50) {
+        if(millis() % 250 < 30 * multiplier) {
             makeGlitch(new Glitch(true, random(5, 15), 20, random(-1, 1)*50, height, random(15, 30)));
         }
         
-        if(random(1, 100) < 2) {
+        if(random(1, 100) < 5 * multiplier) {
             glitchText();
         }
     }
