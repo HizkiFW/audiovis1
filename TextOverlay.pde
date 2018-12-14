@@ -26,15 +26,17 @@ class TextOverlay implements Overlay {
         this.messageQueue = messageQueue;
         this.fileLocation = fileLocation;
         text = "";
-        font = createFont("fonts/Montserrat-Bold.ttf", textSize);
+        font = createFont("fonts/Gameplay.ttf", textSize);
     }
     
     private void autoSize() {
-        while(textWidth(text) < width) {
+        if(text.trim().length() < 1)
+          return;
+        while(textWidth(text) < width*.9) {
             textSize++;
             textSize(textSize);
         }
-        while(textWidth(text) > width) {
+        while(textWidth(text) > width*.9) {
             textSize--;
             textSize(textSize);
         }
@@ -112,7 +114,7 @@ class TextOverlay implements Overlay {
     public void draw() {
         textFont(font, textSize);
         textAlign(CENTER, CENTER);
-        textLeading(textSize);
+        textLeading(textSize*1.5);
         //fill(1.0f);
         text(text, xpos, ypos);
     }
