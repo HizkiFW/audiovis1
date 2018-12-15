@@ -21,6 +21,7 @@ class GlitchOverlay implements Overlay {
             if(messageQueue.get(0).type == MessageType.GLITCH) {
                 makeGlitch((Glitch) m.message);
                 glitchText();
+                glitchColors();
             } else if(messageQueue.get(0).type == MessageType.GLITCHINESS) {
                 multiplier = (float) m.message;
             }
@@ -84,6 +85,10 @@ class GlitchOverlay implements Overlay {
                 // Ignore ArrayIndexOutOfBoundsException
             }
         }
+        
+        if(random(0, 100) < 2*multiplier) {
+            glitchColors();
+        }
     }
     
     private void glitchText() {
@@ -92,6 +97,19 @@ class GlitchOverlay implements Overlay {
         messageQueue.add(new Message(MessageType.FONT_SIZE, Config.fontSize));
         messageQueue.add(new Message(MessageType.TEXT_POSITION, new float[] {random(0, width), random(0, height)}));
         messageQueue.add(new Message(MessageType.TEXT_POSITION, new float[] {Config.textPosX, Config.textPosY}));
+    }
+    
+    private void glitchColors() {
+        if(multiplier < 0.7) return;
+        
+        PImage screen = get();
+        blendMode(SCREEN);
+        tint(0, 0.5, 1);
+        image(screen, 100*multiplier, 10*multiplier);
+        tint(1, 0.25, 0);
+        image(screen, -100*multiplier, -10*multiplier);
+        noTint();
+        blendMode(REPLACE);
     }
 }
 

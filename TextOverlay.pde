@@ -26,7 +26,7 @@ class TextOverlay implements Overlay {
         this.messageQueue = messageQueue;
         this.fileLocation = fileLocation;
         text = "";
-        font = createFont("fonts/Gameplay.ttf", textSize);
+        font = createFont(Config.fontFile, textSize);
     }
     
     private void autoSize() {
@@ -114,7 +114,7 @@ class TextOverlay implements Overlay {
     public void draw() {
         textFont(font, textSize);
         textAlign(CENTER, CENTER);
-        textLeading(textSize*1.5);
+        textLeading(textSize*Config.lineSpacing);
         //fill(1.0f);
         text(text, xpos, ypos);
     }
