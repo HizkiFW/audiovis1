@@ -95,9 +95,9 @@ class TextOverlay implements Overlay {
                      Message m2 = new Message(MessageType.GLITCH, g2);
                      messageQueue.add(m2);
                      
-                     Glitch g3 = new Glitch(true, 0, textHeight/8, 50, ypos, 20);
-                     Message m3 = new Message(MessageType.GLITCH, g3);
-                     messageQueue.add(m3);
+                     //Glitch g3 = new Glitch(true, 0, textHeight/8, 50, ypos, 20);
+                     //Message m3 = new Message(MessageType.GLITCH, g3);
+                     //messageQueue.add(m3);
                      
                      // Resize text
                      if(textAutoSize)

@@ -55,6 +55,16 @@ class NetworkManager {
                     m = new Message(MessageType.GLITCH, new Glitch(true, 0, 10, 40*round(random(-1, 1)), height, 15));
                     messageQueue.add(m);
                     messageQueue.add(m);
+                } else if(data[1].trim().equals("GLITCH_COLORS")) {
+                    print("Type: GLITCH_COLORS");
+                    m = new Message(MessageType.INVERT_COLORS, null);
+                    messageQueue.add(m);
+                    m = new Message(MessageType.GLITCH_COLORS, null);
+                    messageQueue.add(m);
+                    m = new Message(MessageType.INVERT_COLORS, null);
+                } else if(data[1].trim().equals("ULTRAGLITCH")) {
+                    print("Type: ULTRAGLITCH");
+                    m = new Message(MessageType.ULTRAGLITCH, null);
                 } else if(data[1].trim().equals("FONT_SIZE")) {
                     print("Type: FONT_SIZE");
                     Config.fontSize = float(data[2]);

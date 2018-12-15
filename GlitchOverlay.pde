@@ -24,23 +24,36 @@ class GlitchOverlay implements Overlay {
                 glitchColors();
             } else if(messageQueue.get(0).type == MessageType.GLITCHINESS) {
                 multiplier = (float) m.message;
+            } else if(messageQueue.get(0).type == MessageType.GLITCH_COLORS) {
+                glitchColors();
+            } else if(messageQueue.get(0).type == MessageType.ULTRAGLITCH) {
+                glitchText();
+                glitchText();
+                glitchText();
+                glitchText();
+                glitchText();
+                glitch(5, height-10, random(10, 20), true);
+                makeGlitch(new Glitch(true, 0, 50, 500*(floor(random(0, 2)) == 0 ? -1 : 1), height, 20));
+                makeGlitch(new Glitch(true, 5, 50, 500*(floor(random(0, 2)) == 0 ? -1 : 1), height, 15));
+                makeGlitch(new Glitch(true, 10, 50, 500*(floor(random(0, 2)) == 0 ? -1 : 1), height, 10));
+                glitchColors();
             }
         }
         
         // Occasional glitch
         if(millis() % 3000 < 30 * multiplier) {
-            makeGlitch(new Glitch(true, random(0, 10), 10, 20, height, 20));
+            makeGlitch(new Glitch(false, random(0, 10), 10, 20, height, 20));
         }
         if(millis() % 7000 < 30 * multiplier) {
-            makeGlitch(new Glitch(true, random(0, 10), 10, -20, height, 20)); 
+            makeGlitch(new Glitch(false, random(0, 10), 10, -20, height, 20)); 
         }
         
         // FRICKIN WILD GLITCHAZZ!!
         if(millis() % 250 < 30 * multiplier) {
-            makeGlitch(new Glitch(true, random(5, 15), 20, random(-1, 1)*50, height, random(15, 30)));
+            makeGlitch(new Glitch(false, random(5, 15), 20, random(-1, 1)*50, height, random(15, 30)));
         }
         
-        if(random(1, 100) < 5 * multiplier) {
+        if(random(1, 100) < 5 * multiplier && multiplier > 0.5) {
             glitchText();
         }
     }
@@ -86,28 +99,29 @@ class GlitchOverlay implements Overlay {
             }
         }
         
-        if(random(0, 100) < 2*multiplier) {
+        if(random(0, 100) < 2*multiplier && multiplier > 0.7) {
             glitchColors();
         }
     }
     
     private void glitchText() {
-        if(multiplier < 0.5) return;
         messageQueue.add(new Message(MessageType.FONT_SIZE, Config.fontSize * random(1.0f, multiplier*3.0f)));
         messageQueue.add(new Message(MessageType.FONT_SIZE, Config.fontSize));
+        
+        messageQueue.add(new Message(MessageType.GLITCH_COLORS, null));
+        
         messageQueue.add(new Message(MessageType.TEXT_POSITION, new float[] {random(0, width), random(0, height)}));
         messageQueue.add(new Message(MessageType.TEXT_POSITION, new float[] {Config.textPosX, Config.textPosY}));
     }
     
     private void glitchColors() {
-        if(multiplier < 0.7) return;
-        
+        float rand_y = random(-1.0f, 1.0f);
         PImage screen = get();
         blendMode(SCREEN);
         tint(0, 0.5, 1);
-        image(screen, 100*multiplier, 10*multiplier);
+        image(screen, 100*multiplier, 10*multiplier*rand_y);
         tint(1, 0.25, 0);
-        image(screen, -100*multiplier, -10*multiplier);
+        image(screen, -100*multiplier, -10*multiplier*rand_y);
         noTint();
         blendMode(REPLACE);
     }

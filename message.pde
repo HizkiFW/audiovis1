@@ -1,5 +1,7 @@
 public static enum MessageType {
     GLITCH,
+    ULTRAGLITCH,
+    GLITCH_COLORS,
     GLITCHINESS,
     INVERT_COLORS,
     FONT_SIZE,
